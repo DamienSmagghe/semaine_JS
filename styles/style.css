@@ -43,3 +43,11 @@ body {
 	position: absolute;
 	left: 660px;
 }
+.menu {
+	display: flex;
+	text-align: center;
+}
+.seller1, .seller2 {
+	background: grey;
+	margin: 10px;
+}
