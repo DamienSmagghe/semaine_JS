@@ -9,6 +9,7 @@ body {
 	margin: 0 auto;
 	display: flex;
 	flex-wrap: wrap;
+	overflow: hidden;
 }
 .safeZone {
 	width: 200px;
@@ -28,9 +29,17 @@ body {
 	height: 400px;
 	background: green; 
 	display: flex;
+	position: relative;
 }
 .range {
 	width: 220px;
 	height: 400px;
 	border-left: 1px solid black;
+}
+#mob {
+	width: 60px;
+	height: 60px;
+	background: black;
+	position: absolute;
+	left: 660px;
 }
