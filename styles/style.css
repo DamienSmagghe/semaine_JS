@@ -12,13 +12,13 @@ body {
 	overflow: hidden;
 }
 .safeZone {
-	width: 200px;
+	width: 100px;
 	height: 400px;
 	background: grey;
 }
 .defense {
 	background: blue;
-	width: 100px;
+	width: 200px;
 	height: 400px;
 }
 .playZone {
@@ -50,4 +50,11 @@ body {
 .seller1, .seller2 {
 	background: grey;
 	margin: 10px;
+}
+#nextLevel {
+	position: fixed;
+	top: 40%;
+	left: 40%;
+	background: rgba(0,0,0,0.5);
+	padding: 10px;
 }

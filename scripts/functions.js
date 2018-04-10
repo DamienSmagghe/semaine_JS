@@ -17,7 +17,7 @@ mob2 = {
 	health : 20
 },
 boss = {
-	speed : 0.8,
+	speed : 0.2,
 	damages : 500,
 	health : 100
 }
@@ -68,7 +68,6 @@ defeat()
 
 
 
-
 function defeat(){
 	setInterval(function(){
 		if (wall <= 0){
@@ -80,26 +79,31 @@ function defeat(){
 
 function spawn() {	
 	let mobVariant = mobVariants[Math.floor(Math.random() * 3)]
+	if((level % 5) == 0){
+		mobVariant = mobVariants[Math.floor(Math.random() * 4)]
+	}
 	
 	function mobAutoRun(mobVariety){
 		let mob = document.createElement('div')
-		let amountLife = mobVariety.health
+		let amountLife = mobVariety.health //
 		mob.setAttribute('id', 'mob')
 		document.querySelector(".street").appendChild(mob)
-		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)]
+		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)] //
 		let posX = document.querySelector('.street').offsetWidth
 		let movement = setInterval(function(){
 		posX -= speedReference * mobVariant.speed
-		if (posX == 0){
-			setInterval(function(){
-				wall -= mobVariety.damages
-				amountLife -= 10
-			}, 1000)
+		if (posX == 0){//
+			let lifeGestion = setInterval(function(){ //
+								wall -= mobVariety.damages//
+								amountLife -= 10//
+								if(amountLife <= 0){//
+									clearInterval(lifeGestion)//
+								}//
+							}, 1000)//
 		}
 		if (posX >= 0){
 			mob.style.left = posX + 'px'
 		}
-		console.log(amountLife)
 		if (amountLife <= 0){
 			mobKilling(mob)
 			clearInterval(movement)
@@ -110,7 +114,7 @@ function spawn() {
 
 	mobAutoRun(mobVariant)	
 	amountMob++	
-	timeInterval = Math.floor(Math.random() * 5000)
+	timeInterval = Math.floor(Math.random() * 5000 + 2000)
 }
 
 function stopSpawn(){
@@ -118,6 +122,7 @@ function stopSpawn(){
 		if(amountMob >= Math.ceil(level * 1.5)){
 			clearInterval(intervalSpawn)
 			amountMob = 0
+			setTimeout(createButton, 28000)
 		}
 	},50)
 }
@@ -126,13 +131,11 @@ function mobKilling(thisMob){
 	let obj = document.querySelector('.street')
 	obj.removeChild(thisMob)
 }
-
 function wallLife(){
 	setInterval(function(){
 		let wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall 
 	},30)
 }
-
 function displayMoney(){
 	setInterval(function(){
 		document.querySelector('.money p').innerHTML = money
@@ -152,6 +155,23 @@ function upgrade(sellerType){
 	sellerType.rate += 300
 	sellerType.level++
 }
+
+function createButton(){
+				let button =document.createElement('button')
+				button.setAttribute('id','nextLevel')
+				button.innerHTML = 'Passez au niveau : ' + (level + 1)
+				document.querySelector('.game').appendChild(button)
+				document.querySelector('#nextLevel').addEventListener(
+					'click',
+					function(){
+						level+=1
+						let displayLevel = document.querySelector('.level p').innerHTML = 'Niveau : ' + level
+						intervalSpawn = setInterval(spawn, timeInterval)
+						let object = document.querySelector('.game')
+						object.removeChild(button)
+
+					})
+				}
 
 document.querySelector('.seller1 button').addEventListener(
 	'click',
@@ -174,6 +194,7 @@ document.querySelector('.seller2 button').addEventListener(
 		}
 	}
 )
+
 
 
 
