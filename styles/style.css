@@ -43,6 +43,12 @@ body {
 	position: absolute;
 	left: 660px;
 }
+#mobLife {
+	background: red;
+	height: 5px;
+	width: 100%;
+	border-radius: 2px;
+}
 .menu {
 	display: flex;
 	text-align: center;
@@ -57,4 +63,27 @@ body {
 	left: 40%;
 	background: rgba(0,0,0,0.5);
 	padding: 10px;
+}
+.defense {
+	display: flex;
+}
+.wall, .heros {
+	width: 100px;
+	height: 400px;
+}
+.spot {
+	width: 60px;
+	height: 60px;
+	margin: 20px 10px 40px 10px;
+	background: black;
+}
+#tower {
+	width: 60px;
+	height: 60px;
+	background: white;
+}
+#tower2 {
+	width: 60px;
+	height: 60px;
+	background: grey;
 }

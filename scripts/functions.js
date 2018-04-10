@@ -1,25 +1,33 @@
+const range2 = 440
+const range1 = 220
+const addSeller1Price = 200
+const addSeller2Price = 500
+const speedReference = 1
+
+
+
 //Defining the list of possible mean mobs with their features
 
 let mobVariants = [
 mob1 = {
 	speed : 1.5,
 	damages : 100,
-	health : 10
+	health : 100
 },
 mob2 = {
 	speed : 2,
 	damages : 60,
-	health : 15
+	health : 150
 },
 	mob3 = {
 	speed : 2,
 	damages : 100,
-	health : 20
+	health : 200
 },
 boss = {
 	speed : 0.2,
 	damages : 500,
-	health : 100
+	health : 1000
 }
 ]
 
@@ -28,7 +36,6 @@ boss = {
 let seller1 = {
 	damages : 5,
 	range : 2,
-	rate : 1500,
 	price : 200,
 	level : 0
 }
@@ -36,15 +43,22 @@ let seller1 = {
 let seller2 = {
 	damages : 10,
 	range : 1,
-	rate : 2500,
 	price : 200,
 	level : 0
 }
 
-const speedReference = 1
+let tower1 = 0
+let tower2 = 0
+let spots = document.querySelectorAll('.spot')
+let freeSpots = 4
+let priceSeller2 = document.querySelector('.seller2 .upgrade .price').innerHTML = seller2.price
+let priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML = seller1.price
+
+
 
 //Variable necessary to define before to start initiating the game, like the level, the amount of money and the life of the wall
-let money = 1000
+
+let money = 100000
 let level = 1
 let wall = 4000
 
@@ -85,33 +99,48 @@ function spawn() {
 	
 	function mobAutoRun(mobVariety){
 		let mob = document.createElement('div')
-		let amountLife = mobVariety.health //
+		let amountLife = mobVariety.health 
 		mob.setAttribute('id', 'mob')
 		document.querySelector(".street").appendChild(mob)
-		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)] //
+		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)] 
 		let posX = document.querySelector('.street').offsetWidth
+		let mobLife = document.createElement('div')
+		mobLife.setAttribute('id', 'mobLife')
+		mob.appendChild(mobLife)
 		let movement = setInterval(function(){
-		posX -= speedReference * mobVariant.speed
-		if (posX == 0){//
-			let lifeGestion = setInterval(function(){ //
-								wall -= mobVariety.damages//
-								amountLife -= 10//
-								if(amountLife <= 0){//
-									clearInterval(lifeGestion)//
-								}//
-							}, 1000)//
-		}
-		if (posX >= 0){
-			mob.style.left = posX + 'px'
-		}
-		if (amountLife <= 0){
-			mobKilling(mob)
-			clearInterval(movement)
-		}
+			mobLife.style.width = amountLife / mobVariety.health * 100 +"%"
+			posX -= speedReference * mobVariant.speed	
+			if (posX == 0){
+				let lifeGestion = setInterval(function(){ 
+					wall -= mobVariety.damages
+					amountLife -= 10
+					if(amountLife <= 0){
+						clearInterval(lifeGestion)
+					}
+				}, 1000)
+			}
+			if (posX >= 0){
+				mob.style.left = posX + 'px'
+			}
+			
+			if (amountLife <= 0){
+				mobKilling(mob)
+				clearInterval(movement)
+			}
 		},60)
-
+		setInterval(function(){
+				if (posX > range1 && posX <= range2){
+					if(tower1 > 0){
+						amountLife -= seller1.damages * tower1
+					}
+				}
+				if (posX <= range1 && posX >= 0){
+						if((tower1 > 0 || tower2 > 0)){
+							amountLife -= seller1.damages * tower1 + seller2.damages * tower2
+						}	
+				}
+		},2000)
 	}
-
 	mobAutoRun(mobVariant)	
 	amountMob++	
 	timeInterval = Math.floor(Math.random() * 5000 + 2000)
@@ -152,7 +181,6 @@ function levelSellers(){
 function upgrade(sellerType){
 	sellerType.damages *= 2
 	sellerType.price *= 2
-	sellerType.rate += 300
 	sellerType.level++
 }
 
@@ -173,24 +201,66 @@ function createButton(){
 					})
 				}
 
-document.querySelector('.seller1 button').addEventListener(
+
+function defenseDamagesRange1(life){
+	if((tower1 > 0 || tower2 > 0)){
+		life -= seller1.damages * tower1 + seller2.damages * tower2
+	}
+}
+function defenseDamagesRange2(life){
+	if(tower1 > 0){
+		life -= seller1.damages * tower1
+	}
+}
+
+
+
+
+
+document.querySelector('.seller1 .buy button').addEventListener(
+	'click',
+	function(){
+		if(money >= addSeller1Price && (freeSpots > 0)){
+			let tower = document.createElement('div')
+			tower.setAttribute('id', 'tower')
+			spots[4 - freeSpots].appendChild(tower)
+			freeSpots--
+			tower1++
+			money -= addSeller1Price
+		}
+	})
+
+document.querySelector('.seller1 .upgrade button').addEventListener(
 	'click',
 	function(){
 		if (money >= seller1.price){
 			money -= seller1.price
 			upgrade(seller1)
-			console.log(seller1)
+			priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML = seller1.price
 		}
 	}
 )
 
-document.querySelector('.seller2 button').addEventListener(
+document.querySelector('.seller2 .buy button').addEventListener(
+	'click',
+	function(){
+		if(money >= addSeller2Price && (freeSpots > 0)){
+			let tower = document.createElement('div')
+			tower.setAttribute('id', 'tower2')
+			spots[4 - freeSpots].appendChild(tower)
+			freeSpots--
+			tower2++
+			money -= addSeller2Price
+		}
+	})
+
+document.querySelector('.seller2 .upgrade button').addEventListener(
 	'click',
 	function(){
 		if (money >= seller2.price){
 			money -= seller2.price
 			upgrade(seller2)
-			console.log(seller2)
+			priceSeller2 = document.querySelector('.seller2 .upgrade .price').innerHTML = seller2.price
 		}
 	}
 )
