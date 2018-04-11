@@ -19,7 +19,7 @@ mob2 = {
 	damages : 60,
 	health : 150
 },
-	mob3 = {
+mob3 = {
 	speed : 2,
 	damages : 100,
 	health : 200
@@ -102,11 +102,23 @@ function spawn() {
 		let amountLife = mobVariety.health 
 		mob.setAttribute('id', 'mob')
 		document.querySelector(".street").appendChild(mob)
-		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)] 
-		let posX = document.querySelector('.street').offsetWidth
+		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)]
+		if (mobVariant == mob1){
+			mob.classList.add('mob1')
+		}
+		else if (mobVariant == mob2){
+			mob.classList.add('mob2')
+		}
+		else if (mobVariant == mob3){
+			mob.classList.add('mob3')
+		}
+		else if (mobVariant == boss){
+			mob.classList.add('boss')
+		} 	
 		let mobLife = document.createElement('div')
 		mobLife.setAttribute('id', 'mobLife')
 		mob.appendChild(mobLife)
+		let posX = document.querySelector('.street').offsetWidth
 		let movement = setInterval(function(){
 			mobLife.style.width = amountLife / mobVariety.health * 100 +"%"
 			posX -= speedReference * mobVariant.speed	
