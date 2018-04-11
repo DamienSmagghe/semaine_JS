@@ -3,6 +3,7 @@ const range1 = 220
 const addSeller1Price = 200
 const addSeller2Price = 500
 const speedReference = 1
+const heroDamage = 20
 
 
 
@@ -12,22 +13,26 @@ let mobVariants = [
 mob1 = {
 	speed : 1.5,
 	damages : 100,
-	health : 100
+	health : 50,
+	reward : 30
 },
 mob2 = {
 	speed : 2,
 	damages : 60,
-	health : 150
+	health : 50,
+	reward : 50
 },
 mob3 = {
 	speed : 2,
 	damages : 100,
-	health : 200
+	health : 50,
+	reward : 80
 },
 boss = {
 	speed : 0.2,
 	damages : 500,
-	health : 1000
+	health : 1000,
+	reward : 200,
 }
 ]
 
@@ -58,10 +63,11 @@ let priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML 
 
 //Variable necessary to define before to start initiating the game, like the level, the amount of money and the life of the wall
 
-let money = 100000
+let money = 0
 let level = 1
 let wall = 4000
 
+let bestScore = 0
 //Defining the 4 horizontal axis where the mob can pop on the game surface
 
 let variousSpawn = ['20px', '120px','220px','320px']
@@ -74,12 +80,18 @@ let heros
 let margin = 20
 let amountShoot = 0
 
+let mobs = []
+
+let mobSpawned = []
+
+localStorage.setItem('BestScore',bestScore)
+
 //Initiating the various functions that run the games
 
 wallLife()
 displayMoney()
 levelSellers()
-
+generateHeros()
 let amountMob = 0
 let intervalSpawn = setInterval(spawn, timeInterval)
 stopSpawn()
@@ -92,6 +104,9 @@ function defeat(){
 		if (wall <= 0){
 			//window.alert('Défaite')
 			clearInterval(wall)
+			if (bestScore < level){
+				bestScore = level
+			}
 		}
 	},50)
 }
@@ -101,12 +116,14 @@ function spawn() {
 	if((level % 5) == 0){
 		mobVariant = mobVariants[Math.floor(Math.random() * 4)]
 	}
+	mobSpawned.push({position : 0, life : mobVariant.health})
+	let mobPlace = amountMob
 
 	function mobAutoRun(mobVariety){
 		let mob = document.createElement('div')
-		let amountLife = mobVariety.health
 		mob.setAttribute('id', 'mob')
 		document.querySelector(".street").appendChild(mob)
+		randomSpawn = Math.floor(Math.random() * 4)
 		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)]
 		if (mobVariant == mob1){
 			mob.classList.add('mob1')
@@ -120,45 +137,48 @@ function spawn() {
 		else if (mobVariant == boss){
 			mob.classList.add('boss')
 		}
+		mobs.push(mob)
 		let mobLife = document.createElement('div')
 		mobLife.setAttribute('id', 'mobLife')
 		mob.appendChild(mobLife)
 		let posX = document.querySelector('.street').offsetWidth
 		let movement = setInterval(function(){
-			mobLife.style.width = amountLife / mobVariety.health * 100 +"%"
 			posX -= speedReference * mobVariant.speed
+			mobSpawned[mobPlace].position = mob.getBoundingClientRect()
 			if (posX == 0){
-				let lifeGestion = setInterval(function(){
+				let wallAttack = setInterval(function(){
 					wall -= mobVariety.damages
-					amountLife -= 10
-					if(amountLife <= 0){
-						clearInterval(lifeGestion)
-					}
 				}, 1000)
 			}
 			if (posX >= 0){
 				mob.style.left = posX + 'px'
+				let lifeGestion = setInterval(function(){
+					mobLife.style.width = mobSpawned[mobPlace].life / mobVariety.health * 100 +"%"
+				}, 50)
 			}
 
-			if (amountLife <= 0){
+			if (mobSpawned[mobPlace].life <= 0){
 				mobKilling(mob)
+				money += mobVariant.reward
 				clearInterval(movement)
+				clearInterval(lifeGestion)
 			}
-		},60)
+		},50)
 		setInterval(function(){
 				if (posX > range1 && posX <= range2){
 					if(tower1 > 0){
-						amountLife -= seller1.damages * tower1
+						mobSpawned[mobPlace].life -= seller1.damages * tower1
 					}
 				}
 				if (posX <= range1 && posX >= 0){
 						if((tower1 > 0 || tower2 > 0)){
-							amountLife -= seller1.damages * tower1 + seller2.damages * tower2
+							mobSpawned[mobPlace].life -= seller1.damages * tower1 + seller2.damages * tower2
 						}
 				}
 		},2000)
 	}
 	mobAutoRun(mobVariant)
+
 	amountMob++
 	timeInterval = Math.floor(Math.random() * 5000 + 2000)
 }
@@ -168,7 +188,7 @@ function stopSpawn(){
 		if(amountMob >= Math.ceil(level * 1.5)){
 			clearInterval(intervalSpawn)
 			amountMob = 0
-			setTimeout(createButton, 28000)
+			setTimeout(createButton, 40000)
 		}
 	},50)
 }
@@ -201,7 +221,7 @@ function upgrade(sellerType){
 	sellerType.level++
 }
 
-function createButton(){
+function createButton(){			
 				let button =document.createElement('button')
 				button.setAttribute('id','nextLevel')
 				button.innerHTML = 'Passez au niveau : ' + (level + 1)
@@ -209,6 +229,7 @@ function createButton(){
 				document.querySelector('#nextLevel').addEventListener(
 					'click',
 					function(){
+						mobSpawned = new Array()
 						level+=1
 						let displayLevel = document.querySelector('.level p').innerHTML = 'Niveau : ' + level
 						intervalSpawn = setInterval(spawn, timeInterval)
@@ -230,32 +251,42 @@ function defenseDamagesRange2(life){
 	}
 }
 
-//function axel
 function generateHeros(){
 	heros = document.createElement('div')
 	heros.setAttribute('id', 'heros')
 	document.querySelector(".defense").appendChild(heros)
 }
-generateHeros()
 
 function generateShoot(){
-	let marginTopShoot = margin
+	let marginTopShoot = margin + 20
 	let shoot = document.createElement('div')
 	shoot.setAttribute('id', 'shoot')
+	shoot.style.opacity = '0'
+	setTimeout(function(){
+		shoot.style.opacity = '1'
+	}, 10)
 	amountShoot ++
 	document.querySelector('.defense').appendChild(shoot)
 	let positionX = 90
 	let mouvement = setInterval(function(){
-		positionX += speedReference*1.5
+		positionX += speedReference
 		if (positionX <= 840){
 			shoot.style.left = positionX + 'px'
 			shoot.style.top = marginTopShoot + "px"
+			for (let j = 0; j < mobSpawned.length; j++){
+				let collision = isCollide(shoot, mobs[j])
+				if (collision == false){
+					mobSpawned[j].life -= heroDamage
+					destroyShoot(shoot)
+					clearInterval(mouvement)
+				}
+			}
 		}
 		if(positionX >= 840){
 			destroyShoot(shoot)
 			clearInterval(mouvement)
 		}
-	})
+	},5)
 }
 
 function destroyShoot(thisShoot){
@@ -264,7 +295,33 @@ function destroyShoot(thisShoot){
 	amountShoot --
 }
 
-//fin Axel function
+function isCollide(a, b) {
+    var aRect = a.getBoundingClientRect();
+    var bRect = b.getBoundingClientRect();
+
+    return (
+        ((aRect.top + aRect.height) < (bRect.top)) ||
+        (aRect.top > (bRect.top + bRect.height)) ||
+        ((aRect.left + aRect.width) < bRect.left) ||
+        (aRect.left > (bRect.left + bRect.width))
+    )
+}
+
+/*function collision(posShot, verticalAxis){
+	if(verticalAxis >= 20 && verticalAxis <= 80){
+		for( let hittenMob = 0; hittenMob < mobSpawned.length; hittenMob++){
+			if (posShot.left - 10>= mobSpawned[hittenMob].position && mobSpawned[hittenMob].position <= posShot.left + 10){
+				setInterval(function(){mobSpawned[hittenMob].life -= 10}, 3000)
+				window.confirm('collision')
+			}
+			else{
+				return false
+			}
+		}
+	}
+	return false
+}*/
+
 document.querySelector('.seller1 .buy button').addEventListener(
 	'click',
 	function(){
@@ -314,11 +371,8 @@ document.querySelector('.seller2 .upgrade button').addEventListener(
 )
 
 
-//Axel
 heros.style.marginTop = margin + 'px'
 window.addEventListener('keydown', function(event) {
-	console.log(margin)
-
 
 	if(event.keyCode === 83 && margin < 320 ){
 		margin += 6
@@ -337,3 +391,24 @@ window.addEventListener('keypress', function(e){
 		}
 	}
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
