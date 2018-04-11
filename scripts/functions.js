@@ -69,6 +69,11 @@ let variousSpawn = ['20px', '120px','220px','320px']
 //The spawn interval when the game start
 let timeInterval = 5000
 
+//varaible axel
+let heros
+let margin = 20
+let amountShoot = 0
+
 //Initiating the various functions that run the games
 
 wallLife()
@@ -91,15 +96,15 @@ function defeat(){
 	},50)
 }
 
-function spawn() {	
+function spawn() {
 	let mobVariant = mobVariants[Math.floor(Math.random() * 3)]
 	if((level % 5) == 0){
 		mobVariant = mobVariants[Math.floor(Math.random() * 4)]
 	}
-	
+
 	function mobAutoRun(mobVariety){
 		let mob = document.createElement('div')
-		let amountLife = mobVariety.health 
+		let amountLife = mobVariety.health
 		mob.setAttribute('id', 'mob')
 		document.querySelector(".street").appendChild(mob)
 		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)]
@@ -114,16 +119,16 @@ function spawn() {
 		}
 		else if (mobVariant == boss){
 			mob.classList.add('boss')
-		} 	
+		}
 		let mobLife = document.createElement('div')
 		mobLife.setAttribute('id', 'mobLife')
 		mob.appendChild(mobLife)
 		let posX = document.querySelector('.street').offsetWidth
 		let movement = setInterval(function(){
 			mobLife.style.width = amountLife / mobVariety.health * 100 +"%"
-			posX -= speedReference * mobVariant.speed	
+			posX -= speedReference * mobVariant.speed
 			if (posX == 0){
-				let lifeGestion = setInterval(function(){ 
+				let lifeGestion = setInterval(function(){
 					wall -= mobVariety.damages
 					amountLife -= 10
 					if(amountLife <= 0){
@@ -134,7 +139,7 @@ function spawn() {
 			if (posX >= 0){
 				mob.style.left = posX + 'px'
 			}
-			
+
 			if (amountLife <= 0){
 				mobKilling(mob)
 				clearInterval(movement)
@@ -149,12 +154,12 @@ function spawn() {
 				if (posX <= range1 && posX >= 0){
 						if((tower1 > 0 || tower2 > 0)){
 							amountLife -= seller1.damages * tower1 + seller2.damages * tower2
-						}	
+						}
 				}
 		},2000)
 	}
-	mobAutoRun(mobVariant)	
-	amountMob++	
+	mobAutoRun(mobVariant)
+	amountMob++
 	timeInterval = Math.floor(Math.random() * 5000 + 2000)
 }
 
@@ -168,13 +173,13 @@ function stopSpawn(){
 	},50)
 }
 
-function mobKilling(thisMob){	 
+function mobKilling(thisMob){
 	let obj = document.querySelector('.street')
 	obj.removeChild(thisMob)
 }
 function wallLife(){
 	setInterval(function(){
-		let wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall 
+		let wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
 	},30)
 }
 function displayMoney(){
@@ -225,10 +230,41 @@ function defenseDamagesRange2(life){
 	}
 }
 
+//function axel
+function generateHeros(){
+	heros = document.createElement('div')
+	heros.setAttribute('id', 'heros')
+	document.querySelector(".defense").appendChild(heros)
+}
+generateHeros()
 
+function generateShoot(){
+	let marginTopShoot = margin
+	let shoot = document.createElement('div')
+	shoot.setAttribute('id', 'shoot')
+	amountShoot ++
+	document.querySelector('.defense').appendChild(shoot)
+	let positionX = 90
+	let mouvement = setInterval(function(){
+		positionX += speedReference
+		if (positionX <= 840){
+			shoot.style.left = positionX + 'px'
+			shoot.style.top = marginTopShoot + "px"
+		}
+		if(positionX >= 840){
+			destroyShoot(shoot)
+			clearInterval(mouvement)
+		}
+	})
+}
 
+function destroyShoot(thisShoot){
+	let obj = document.querySelector('.defense')
+	obj.removeChild(thisShoot)
+	amountShoot --
+}
 
-
+//fin Axel function
 document.querySelector('.seller1 .buy button').addEventListener(
 	'click',
 	function(){
@@ -278,12 +314,26 @@ document.querySelector('.seller2 .upgrade button').addEventListener(
 )
 
 
+//Axel
+heros.style.marginTop = margin + 'px'
+window.addEventListener('keydown', function(event) {
+	console.log(margin)
 
 
+	if(event.keyCode === 83 && margin < 320 ){
+		margin += 6
+		heros.style.marginTop = margin + 'px'
+	}
+	else if (event.keyCode === 90 && margin >20 ){
+		margin -= 6
+		heros.style.marginTop = margin + 'px'
+	}
+})
 
-
-
-
-
-
-
+window.addEventListener('keypress', function(e){
+	if(e.keyCode === 32){
+		if(amountShoot<2){
+			generateShoot()
+		}
+	}
+})
