@@ -246,7 +246,7 @@ function generateShoot(){
 	document.querySelector('.defense').appendChild(shoot)
 	let positionX = 90
 	let mouvement = setInterval(function(){
-		positionX += speedReference
+		positionX += speedReference*1.5
 		if (positionX <= 840){
 			shoot.style.left = positionX + 'px'
 			shoot.style.top = marginTopShoot + "px"
@@ -331,8 +331,8 @@ window.addEventListener('keydown', function(event) {
 })
 
 window.addEventListener('keypress', function(e){
-	if(e.keyCode === 32){
-		if(amountShoot<2){
+	if(e.keyCode === 109){
+		if(amountShoot<3){
 			generateShoot()
 		}
 	}
