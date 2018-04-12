@@ -2,6 +2,9 @@ body {
 	margin: 0 auto;
 	padding: 0;
 }
+.main{
+	margin-top:20px;
+}
 .game {
 	width: 960px;
 	height: 100%;
@@ -13,22 +16,19 @@ body {
 .safeZone {
 	width: 100px;
 	height: 400px;
-	background: grey;
 }
 .defense {
-	background: blue;
 	width: 200px;
 	height: 400px;
 	position:relative;
 }
 .playZone {
 	display: flex;
-
+	background-image: url("../images/Plan de travail 1.png");
 }
 .street {
 	width: 660px;
 	height: 400px;
-
 	display: flex;
 	position: relative;
 }
@@ -40,7 +40,6 @@ body {
 #mob {
 	width: 60px;
 	height: 60px;
-	background: black;
 	position: absolute;
 	left: 660px;
 }
@@ -55,15 +54,19 @@ body {
 	text-align: center;
 }
 .seller1, .seller2 {
-	background: white;
 	margin: 10px;
 }
 #nextLevel {
 	position: fixed;
 	top: 40%;
 	left: 40%;
-	background: rgba(0,0,0,0.5);
-	padding: 10px;
+	border:none;
+	padding:6px 6px 6px 6px;
+	border-radius:4px;
+	box-shadow:1px 1px 3px #aaa;
+	background:#f38b1b;
+	font:bold 13px Arial;
+	color:black;
 }
 .defense {
 	display: flex;
@@ -76,17 +79,14 @@ body {
 	width: 60px;
 	height: 60px;
 	margin: 20px 10px 40px 10px;
-	background: black;
 }
 #tower {
 	width: 60px;
 	height: 60px;
-	background: white;
 }
 #tower2 {
 	width: 60px;
 	height: 60px;
-	background: grey;
 }
 
 
@@ -94,15 +94,12 @@ body {
 	width:60px;
 	height:60px;
 	margin-left:30px;
-	background:black;
 	position:absolute;
-	/* transition: margin-top  0.5s linear; */
 }
 
 #shoot{
 	width:20px;
 	height:20px;
-	background:black;
 	position:absolute;
 	left:90px;
 }
@@ -113,7 +110,7 @@ body {
 	background-color: grey;
 }
 
-/*disign button*/
+/*disign button buy*/
 .button{
 	border:none;
 	padding:6px 6px 6px 6px;
@@ -124,7 +121,7 @@ body {
 	color:black;
 }
 
-
+/*Disign button upgrade*/
 .buttonUpgrade{
 	border:none;
 	padding:6px 6px 6px 6px;
@@ -133,4 +130,135 @@ body {
 	background:#5cb118;
 	font:bold 13px Arial;
 	color:black;
+}
+
+/*Animations classList*/
+.mob1{
+	animation-name: animationMob1;
+	animation-duration: 0.7s;
+	animation-iteration-count: infinite;
+}
+
+.mob2{
+	animation-name: animationMob2;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+}
+
+
+.mob3{
+	animation-name: animationMob3;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+}
+
+.boss{
+	background-image: url('../imagesC/lientSamsoul.pngg');
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+.animationHeros{
+	animation-name: animationHeros;
+	animation-duration: 0.9s;
+	animation-iteration-count: infinite;
+}
+
+/*Animation sellers*/
+.animationSeller1{
+	animation-name: animationSeller1;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+}
+
+.animationSeller2{
+	animation-name: animationSeller2;
+	animation-duration: 0.7s;
+	animation-iteration-count: infinite;
+}
+
+/*Animation heros shoot*/
+
+.animationShoot{
+	animation-name: animationShoot;
+	animation-duration: 0.7s;
+	animation-iteration-count: infinite;
+}
+
+/*animation: keyframes*/
+
+@keyframes animationHeros{
+	0% {background: url('../images/SteveJobs1.png');background-size: contain;	background-repeat: no-repeat;}
+	33% {background: url('../images/SteveJobs2.png');background-size: contain;	background-repeat: no-repeat;}
+	66% {background: url('../images/SteveJobs3.png');background-size: contain;	background-repeat: no-repeat;}
+	100% {background: url('../images/SteveJobs4.png');background-size: contain;	background-repeat: no-repeat;}
+}
+
+
+@keyframes animationSeller1{
+	0% {background: url('../images/VendeurTower1.png');background-size: contain;	background-repeat: no-repeat;}
+	17% {background: url('../images/VendeurTower2.png');background-size: contain;	background-repeat: no-repeat;}
+	34% {background: url('../images/VendeurTower3.png');background-size: contain;	background-repeat: no-repeat;}
+	51% {background: url('../images/VendeurTower4.png');background-size: contain;	background-repeat: no-repeat;}
+	68% {background: url('../images/VendeurTower3.png');background-size: contain;	background-repeat: no-repeat;}
+	85% {background: url('../images/VendeurTower2.png');background-size: contain;	background-repeat: no-repeat;}
+	100% {background: url('../images/VendeurTower1.png');background-size: contain;	background-repeat: no-repeat;}
+}
+
+@keyframes animationSeller2{
+	0% {background: url('../images/Vendeur1.png');background-size: contain;	background-repeat: no-repeat;}
+	17% {background: url('../images/Vendeur2.png');background-size: contain;	background-repeat: no-repeat;}
+	34% {background: url('../images/Vendeur3.png');background-size: contain;	background-repeat: no-repeat;}
+	51% {background: url('../images/Vendeur4.png');background-size: contain;	background-repeat: no-repeat;}
+	68% {background: url('../images/Vendeur3.png');background-size: contain;	background-repeat: no-repeat;}
+	85% {background: url('../images/Vendeur2.png');background-size: contain;	background-repeat: no-repeat;}
+	100% {background: url('../images/Vendeur1.png');background-size: contain;	background-repeat: no-repeat;}
+
+}
+
+
+@keyframes animationShoot{
+	0% {background: url('../images/Iphone 1.png');background-size: contain;	background-repeat: no-repeat;}
+	7% {background: url('../images/Iphone 2.png');background-size: contain;	background-repeat: no-repeat;}
+	14% {background: url('../images/Iphone 3.png');background-size: contain;	background-repeat: no-repeat;}
+  21% {background: url('../images/Iphone 4.png');background-size: contain;	background-repeat: no-repeat;}
+	28% {background: url('../images/Iphone 5.png');background-size: contain;	background-repeat: no-repeat;}
+	35% {background: url('../images/Iphone 6.png');background-size: contain;	background-repeat: no-repeat;}
+	42% {background: url('../images/Iphone 8.png');background-size: contain;	background-repeat: no-repeat;}
+	49% {background: url('../images/Iphone 9.png');background-size: contain;	background-repeat: no-repeat;}
+	56% {background: url('../images/Iphone 10.png');background-size: contain;	background-repeat: no-repeat;}
+	63% {background: url('../images/Iphone 11.png');background-size: contain;	background-repeat: no-repeat;}
+	70% {background: url('../images/Iphone 12.png');background-size: contain;	background-repeat: no-repeat;}
+	77% {background: url('../images/Iphone 14.png');background-size: contain;	background-repeat: no-repeat;}
+	84% {background: url('../images/Iphone 15.png');background-size: contain;	background-repeat: no-repeat;}
+	91% {background: url('../images/Iphone 16.png');background-size: contain;	background-repeat: no-repeat;}
+	100% {background: url('../images/Iphone 17.png');background-size: contain;	background-repeat: no-repeat;}
+}
+
+@keyframes animationMob1{
+	0% {background: url('../images/ClientAsiatique1.png');background-size: contain;	background-repeat: no-repeat;}
+	10% {background: url('../images/ClientAsiatique2.png');background-size: contain;	background-repeat: no-repeat;}
+	20% {background: url('../images/ClientAsiatique3.png');background-size: contain;	background-repeat: no-repeat;}
+	30% {background: url('../images/ClientAsiatique4.png');background-size: contain;	background-repeat: no-repeat;}
+	40% {background: url('../images/ClientAsiatique5.png');background-size: contain;	background-repeat: no-repeat;}
+	50% {background: url('../images/ClientAsiatique6.png');background-size: contain;	background-repeat: no-repeat;}
+	60% {background: url('../images/ClientAsiatique5.png');background-size: contain;	background-repeat: no-repeat;}
+	70% {background: url('../images/ClientAsiatique4.png');background-size: contain;	background-repeat: no-repeat;}
+	80% {background: url('../images/ClientAsiatique3.png');background-size: contain;	background-repeat: no-repeat;}
+	90% {background: url('../images/ClientAsiatique2.png');background-size: contain;	background-repeat: no-repeat;}
+	100% {background: url('../images/ClientAsiatique1.png');background-size: contain;	background-repeat: no-repeat;}
+}
+
+
+@keyframes animationMob2{
+	0% {background: url('../images/Cliente2.png');background-size: contain;	background-repeat: no-repeat;}
+	50% {background: url('../images/Cliente3.png');background-size: contain;	background-repeat: no-repeat;}
+	100% {background: url('../images/Cliente2.png');background-size: contain;	background-repeat: no-repeat;}
+}
+
+
+@keyframes animationMob3{
+	0% {background: url('../images/ClientSamsoul1.png');background-size: contain;	background-repeat: no-repeat;}
+	33% {background: url('../images/ClientSamsoul2.png');background-size: contain;	background-repeat: no-repeat;}
+	66% {background: url('../images/ClientSamsoul3.png');background-size: contain;	background-repeat: no-repeat;}
+	100% {background: url('../images/ClientSamsoul1.png');background-size: contain;	background-repeat: no-repeat;}
 }

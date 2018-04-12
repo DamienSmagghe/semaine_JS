@@ -155,7 +155,7 @@ function spawn() {
 			}
 			else if (posX >= 0){
 				mob.style.left = posX + 'px'
-				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'	
+				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
 			}
 			if (mobSpawned[mobPlace].life <= 0){
 				mobKilling(mob)
@@ -206,7 +206,7 @@ function upgrade(sellerType){
 	sellerType.level++
 }
 
-function createButton(){			
+function createButton(){
 				let button =document.createElement('button')
 				button.setAttribute('id','nextLevel')
 				button.innerHTML = 'Passez au niveau : ' + (level + 1)
@@ -241,12 +241,14 @@ function generateHeros(){
 	heros = document.createElement('div')
 	heros.setAttribute('id', 'heros')
 	document.querySelector(".defense").appendChild(heros)
+	heros.classList.add('animationHeros')
 }
 
 function generateShoot(){
 	let marginTopShoot = margin + 20
 	let shoot = document.createElement('div')
 	shoot.setAttribute('id', 'shoot')
+	shoot.classList.add('animationShoot')
 	shoot.style.opacity = '0'
 	setTimeout(function(){
 		shoot.style.opacity = '1'
@@ -255,7 +257,7 @@ function generateShoot(){
 	document.querySelector('.defense').appendChild(shoot)
 	let positionX = 90
 	let mouvement = setInterval(function(){
-		positionX += speedReference
+		positionX += speedReference*1.5
 		if (positionX <= 840){
 			shoot.style.left = positionX + 'px'
 			shoot.style.top = marginTopShoot + "px"
@@ -299,6 +301,7 @@ document.querySelector('.seller1 .buy button').addEventListener(
 	function(){
 		if(money >= addSeller1Price && (freeSpots > 0)){
 			let tower = document.createElement('div')
+			tower.classList.add('animationSeller1')
 			tower.setAttribute('id', 'tower')
 			spots[4 - freeSpots].appendChild(tower)
 			freeSpots--
@@ -324,6 +327,7 @@ document.querySelector('.seller2 .buy button').addEventListener(
 	function(){
 		if(money >= addSeller2Price && (freeSpots > 0)){
 			let tower = document.createElement('div')
+			tower.classList.add('animationSeller2')
 			tower.setAttribute('id', 'tower2')
 			spots[4 - freeSpots].appendChild(tower)
 			freeSpots--
@@ -365,24 +369,3 @@ window.addEventListener('keypress', function(e){
 		}
 	}
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
