@@ -178,7 +178,6 @@ function spawn() {
 					mobSpawned[mobPlace].life -= seller1.damages * tower1 + seller2.damages * tower2
 				}
 			}
-			console.log(posX)
 		}
 		towerDamage = setInterval(towerRangeDamage, 2000)
 	}
@@ -191,11 +190,19 @@ function spawn() {
 function stopSpawn(){
 	setInterval(function(){
 		if(amountMob >= Math.ceil(level * 1.5)){
+			console.log(amountMob)
 			clearInterval(intervalSpawn)
+			for (let i = 0; i < mobSpawned.length; i++){
+				if(mobSpawned[i].life >= 0){
+					console.log(mobSpawned)
+					return false
+				}
+			}
+			console.log('tu')
 			amountMob = 0
-			setTimeout(createButton, 28000)
+			setTimeout(createButton, 3000)
 		}
-	},50)
+	},500)
 }
 
 
