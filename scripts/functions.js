@@ -56,6 +56,9 @@ let tower1 = 0
 let tower2 = 0
 let spots = document.querySelectorAll('.spot')
 let freeSpots = 4
+
+let levelSeller1 = document.querySelector('.seller1 .level').innerHTML = seller1.level
+let levelSeller2 = document.querySelector('.seller2 .level').innerHTML = seller2.level
 let priceSeller2 = document.querySelector('.seller2 .upgrade .price').innerHTML = seller2.price
 let priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML = seller1.price
 
@@ -66,7 +69,7 @@ let priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML 
 let money = 0
 let level = 1
 let wall = 4000
-
+let wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
 let bestScore = 0
 //Defining the 4 horizontal axis where the mob can pop on the game surface
 
@@ -88,9 +91,6 @@ localStorage.setItem('BestScore',bestScore)
 
 //Initiating the various functions that run the games
 
-wallLife()
-displayMoney()
-levelSellers()
 generateHeros()
 let amountMob = 0
 let intervalSpawn = setInterval(spawn, timeInterval)
@@ -123,6 +123,9 @@ function spawn() {
 		let mob = document.createElement('div')
 		mob.setAttribute('id', 'mob')
 		document.querySelector(".street").appendChild(mob)
+		let mobLife = document.createElement('div')
+		mobLife.setAttribute('id','mobLife')
+		mob.appendChild(mobLife)
 		randomSpawn = Math.floor(Math.random() * 4)
 		mob.style.top = variousSpawn[Math.floor(Math.random() * 4)]
 		if (mobVariant == mob1){
@@ -138,9 +141,6 @@ function spawn() {
 			mob.classList.add('boss')
 		}
 		mobs.push(mob)
-		let mobLife = document.createElement('div')
-		mobLife.setAttribute('id', 'mobLife')
-		mob.appendChild(mobLife)
 		let posX = document.querySelector('.street').offsetWidth
 		let movement = setInterval(function(){
 			posX -= speedReference * mobVariant.speed
@@ -148,20 +148,21 @@ function spawn() {
 			if (posX == 0){
 				let wallAttack = setInterval(function(){
 					wall -= mobVariety.damages
+					wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
 				}, 1000)
 			}
 			if (posX >= 0){
 				mob.style.left = posX + 'px'
-				let lifeGestion = setInterval(function(){
-					mobLife.style.width = mobSpawned[mobPlace].life / mobVariety.health * 100 +"%"
-				}, 50)
+				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
+
+				
 			}
 
 			if (mobSpawned[mobPlace].life <= 0){
 				mobKilling(mob)
 				money += mobVariant.reward
+				document.querySelector('.money p').innerHTML = money
 				clearInterval(movement)
-				clearInterval(lifeGestion)
 			}
 		},50)
 		setInterval(function(){
@@ -188,7 +189,7 @@ function stopSpawn(){
 		if(amountMob >= Math.ceil(level * 1.5)){
 			clearInterval(intervalSpawn)
 			amountMob = 0
-			setTimeout(createButton, 40000)
+			setTimeout(createButton, 28000)
 		}
 	},50)
 }
@@ -196,22 +197,6 @@ function stopSpawn(){
 function mobKilling(thisMob){
 	let obj = document.querySelector('.street')
 	obj.removeChild(thisMob)
-}
-function wallLife(){
-	setInterval(function(){
-		let wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
-	},30)
-}
-function displayMoney(){
-	setInterval(function(){
-		document.querySelector('.money p').innerHTML = money
-	},30)
-}
-function levelSellers(){
-	setInterval(function(){
-		document.querySelector('.seller1 .level').innerHTML = seller1.level
-		document.querySelector('.seller2 .level').innerHTML = seller2.level
-	},30)
 }
 
 
@@ -229,7 +214,8 @@ function createButton(){
 				document.querySelector('#nextLevel').addEventListener(
 					'click',
 					function(){
-						mobSpawned = new Array()
+						mobSpawned = []
+						mobs = []
 						level+=1
 						let displayLevel = document.querySelector('.level p').innerHTML = 'Niveau : ' + level
 						intervalSpawn = setInterval(spawn, timeInterval)
@@ -342,6 +328,7 @@ document.querySelector('.seller1 .upgrade button').addEventListener(
 			money -= seller1.price
 			upgrade(seller1)
 			priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML = seller1.price
+			levelSeller1 = document.querySelector('.seller1 .level').innerHTML = seller1.level
 		}
 	}
 )
@@ -366,6 +353,7 @@ document.querySelector('.seller2 .upgrade button').addEventListener(
 			money -= seller2.price
 			upgrade(seller2)
 			priceSeller2 = document.querySelector('.seller2 .upgrade .price').innerHTML = seller2.price
+			levelSeller2 = document.querySelector('.seller2 .level').innerHTML = seller2.level
 		}
 	}
 )
