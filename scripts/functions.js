@@ -11,42 +11,42 @@ const heroDamage = 20
 
 let mobVariants = [
 mob1 = {
-	speed : 1.5,
-	damages : 100,
-	health : 50,
+	speed : 3,
+	damages : 30,
+	health : 30,
 	reward : 30
 },
 mob2 = {
-	speed : 2,
-	damages : 60,
-	health : 50,
-	reward : 50
+	speed : 1.8,
+	damages : 80,
+	health : 100,
+	reward : 60
 },
 mob3 = {
-	speed : 2,
+	speed : 2.5,
 	damages : 100,
-	health : 50,
-	reward : 80
+	health : 120,
+	reward : 100
 },
 boss = {
-	speed : 0.2,
-	damages : 500,
-	health : 1000,
-	reward : 200,
+	speed : 0.8,
+	damages : 200,
+	health : 300,
+	reward : 300,
 }
 ]
 
 //Defining the two types of towers that can help the heros in killing the mean mobs with their features
 
 let seller1 = {
-	damages : 5,
+	damages : 2,
 	range : 2,
 	price : 200,
 	level : 0
 }
 
 let seller2 = {
-	damages : 10,
+	damages : 5,
 	range : 1,
 	price : 200,
 	level : 0
@@ -77,14 +77,13 @@ let variousSpawn = ['20px', '120px','220px','320px']
 
 //The spawn interval when the game start
 let timeInterval = 5000
-
 //varaible axel
 let heros
 let margin = 20
 let amountShoot = 0
 
 let mobs = []
-
+let mobKilled = 0
 let mobSpawned = []
 
 localStorage.setItem('BestScore',bestScore)
@@ -115,6 +114,14 @@ function spawn() {
 	let mobVariant = mobVariants[Math.floor(Math.random() * 3)]
 	if((level % 5) == 0){
 		mobVariant = mobVariants[Math.floor(Math.random() * 4)]
+	}
+	if((level % 10) == 0){
+		for(let j = 0; j < mobVariants.length; j++){
+			mobVariants[j].health *= 2
+			mobVariants[j].damages *= 2
+			mobVariants[j].speed += 0.2
+
+		}
 	}
 	mobSpawned.push({position : 0, life : mobVariant.health})
 	let mobPlace = amountMob
@@ -156,9 +163,9 @@ function spawn() {
 			else if (posX >= 0){
 				mob.style.left = posX + 'px'
 				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
-				console
 			}
 			if (mobSpawned[mobPlace].life <= 0){
+				mobKilled++
 				mobKilling(mob)
 				money += mobVariant.reward
 				document.querySelector('.money p').innerHTML = money
@@ -188,21 +195,17 @@ function spawn() {
 }
 
 function stopSpawn(){
-	setInterval(function(){
+	let ending = setInterval(function(){
+
 		if(amountMob >= Math.ceil(level * 1.5)){
-			console.log(amountMob)
 			clearInterval(intervalSpawn)
-			for (let i = 0; i < mobSpawned.length; i++){
-				if(mobSpawned[i].life >= 0){
-					console.log(mobSpawned)
-					return false
-				}
-			}
-			console.log('tu')
-			amountMob = 0
-			setTimeout(createButton, 3000)
+			if(mobKilled >= Math.ceil(level * 1.5)){
+				amountMob = 0
+				clearInterval(ending)
+				createButton()
+			}	
 		}
-	},500)
+	}, 2000)
 }
 
 
@@ -228,9 +231,12 @@ function createButton(){
 					function(){
 						mobSpawned = []
 						mobs = []
+						//amountMob = 0
+						mobKilled = 0
 						level+=1
 						let displayLevel = document.querySelector('.level p').innerHTML = 'Niveau : ' + level
 						intervalSpawn = setInterval(spawn, timeInterval)
+						ending = setInterval(stopSpawn, 2000)
 						let object = document.querySelector('.game')
 						object.removeChild(button)
 
@@ -276,7 +282,7 @@ function generateShoot(){
 			for (let j = 0; j < mobSpawned.length; j++){
 				let collision = isCollide(shoot, mobs[j])
 				if (collision == false){
-					mobSpawned[j].life -= heroDamage
+					mobSpawned[j].life -= heroDamage * (1 +( level / 20))
 					destroyShoot(shoot)
 					clearInterval(mouvement)
 				}
