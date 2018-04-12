@@ -118,7 +118,8 @@ function spawn() {
 	}
 	mobSpawned.push({position : 0, life : mobVariant.health})
 	let mobPlace = amountMob
-
+	let posX = document.querySelector('.street').offsetWidth
+	let towerDamage
 	function mobAutoRun(mobVariety){
 		let mob = document.createElement('div')
 		mob.setAttribute('id', 'mob')
@@ -141,7 +142,6 @@ function spawn() {
 			mob.classList.add('boss')
 		}
 		mobs.push(mob)
-		let posX = document.querySelector('.street').offsetWidth
 		let wallAttack
 		let movement = setInterval(function(){
 			posX -= speedReference * mobVariant.speed
@@ -156,6 +156,7 @@ function spawn() {
 			else if (posX >= 0){
 				mob.style.left = posX + 'px'
 				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
+				console
 			}
 			if (mobSpawned[mobPlace].life <= 0){
 				mobKilling(mob)
@@ -163,20 +164,23 @@ function spawn() {
 				document.querySelector('.money p').innerHTML = money
 				clearInterval(movement)
 				clearInterval(wallAttack)
+				clearInterval(towerDamage)
 			}
 		},50)
-		setInterval(function(){
-				if (posX > range1 && posX <= range2){
-					if(tower1 > 0){
-						mobSpawned[mobPlace].life -= seller1.damages * tower1
-					}
+		function towerRangeDamage(){
+			if (posX > range1 && posX <= range2){
+				if(tower1 > 0){
+					mobSpawned[mobPlace].life -= seller1.damages * tower1
 				}
-				if (posX <= range1 && posX >= 0){
-						if((tower1 > 0 || tower2 > 0)){
-							mobSpawned[mobPlace].life -= seller1.damages * tower1 + seller2.damages * tower2
-						}
+			}
+			else if (posX <= range1 && posX >= 0){
+				if((tower1 > 0 || tower2 > 0)){
+					mobSpawned[mobPlace].life -= seller1.damages * tower1 + seller2.damages * tower2
 				}
-		},2000)
+			}
+			console.log(posX)
+		}
+		towerDamage = setInterval(towerRangeDamage, 2000)
 	}
 	mobAutoRun(mobVariant)
 
@@ -193,6 +197,7 @@ function stopSpawn(){
 		}
 	},50)
 }
+
 
 function mobKilling(thisMob){
 	let obj = document.querySelector('.street')
@@ -307,6 +312,7 @@ document.querySelector('.seller1 .buy button').addEventListener(
 			freeSpots--
 			tower1++
 			money -= addSeller1Price
+			document.querySelector('.money p').innerHTML = money
 		}
 	})
 
@@ -318,6 +324,7 @@ document.querySelector('.seller1 .upgrade button').addEventListener(
 			upgrade(seller1)
 			priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML = seller1.price
 			levelSeller1 = document.querySelector('.seller1 .level').innerHTML = seller1.level
+			document.querySelector('.money p').innerHTML = money
 		}
 	}
 )
@@ -333,6 +340,7 @@ document.querySelector('.seller2 .buy button').addEventListener(
 			freeSpots--
 			tower2++
 			money -= addSeller2Price
+			document.querySelector('.money p').innerHTML = money
 		}
 	})
 
@@ -344,6 +352,7 @@ document.querySelector('.seller2 .upgrade button').addEventListener(
 			upgrade(seller2)
 			priceSeller2 = document.querySelector('.seller2 .upgrade .price').innerHTML = seller2.price
 			levelSeller2 = document.querySelector('.seller2 .level').innerHTML = seller2.level
+			document.querySelector('.money p').innerHTML = money
 		}
 	}
 )
