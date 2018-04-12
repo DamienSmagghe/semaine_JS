@@ -142,27 +142,27 @@ function spawn() {
 		}
 		mobs.push(mob)
 		let posX = document.querySelector('.street').offsetWidth
+		let wallAttack
 		let movement = setInterval(function(){
 			posX -= speedReference * mobVariant.speed
 			mobSpawned[mobPlace].position = mob.getBoundingClientRect()
 			if (posX == 0){
-				let wallAttack = setInterval(function(){
+					wallAttack = setInterval(function(){
 					wall -= mobVariety.damages
 					wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
+					mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
 				}, 1000)
 			}
-			if (posX >= 0){
+			else if (posX >= 0){
 				mob.style.left = posX + 'px'
-				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
-
-				
+				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'	
 			}
-
 			if (mobSpawned[mobPlace].life <= 0){
 				mobKilling(mob)
 				money += mobVariant.reward
 				document.querySelector('.money p').innerHTML = money
 				clearInterval(movement)
+				clearInterval(wallAttack)
 			}
 		},50)
 		setInterval(function(){
@@ -293,20 +293,6 @@ function isCollide(a, b) {
     )
 }
 
-/*function collision(posShot, verticalAxis){
-	if(verticalAxis >= 20 && verticalAxis <= 80){
-		for( let hittenMob = 0; hittenMob < mobSpawned.length; hittenMob++){
-			if (posShot.left - 10>= mobSpawned[hittenMob].position && mobSpawned[hittenMob].position <= posShot.left + 10){
-				setInterval(function(){mobSpawned[hittenMob].life -= 10}, 3000)
-				window.confirm('collision')
-			}
-			else{
-				return false
-			}
-		}
-	}
-	return false
-}*/
 
 document.querySelector('.seller1 .buy button').addEventListener(
 	'click',
@@ -374,7 +360,7 @@ window.addEventListener('keydown', function(event) {
 
 window.addEventListener('keypress', function(e){
 	if(e.keyCode === 109){
-		if(amountShoot<3){
+		if(amountShoot<1){
 			generateShoot()
 		}
 	}
