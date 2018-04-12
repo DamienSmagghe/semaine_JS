@@ -68,7 +68,7 @@ let priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML 
 
 let money = 0
 let level = 1
-let wall = 4000
+let wall = 100
 let wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
 let bestScore = 0
 //Defining the 4 horizontal axis where the mob can pop on the game surface
@@ -86,7 +86,6 @@ let mobs = []
 let mobKilled = 0
 let mobSpawned = []
 
-localStorage.setItem('BestScore',bestScore)
 
 //Initiating the various functions that run the games
 
@@ -99,16 +98,38 @@ defeat()
 
 
 function defeat(){
-	setInterval(function(){
+	let death = setInterval(function(){
 		if (wall <= 0){
-			//window.alert('Défaite')
-			clearInterval(wall)
 			if (bestScore < level){
 				bestScore = level
 			}
+			let retry = document.createElement('button')
+			retry.classList.add('retry')
+			retry.innerHTML ='Rejouez'
+			document.querySelector('.game').appendChild(retry)
+			let bestScoreDisp = document.createElement('div')
+			bestScoreDisp.classList.add('dispbest')
+			bestScoreDisp.innerHTML = 'Votre meilleur score : ' + bestScore
+			document.querySelector('.game').appendChild(bestScoreDisp)
+			clearInterval(death)
+
+			retry.addEventListener(
+				'click',
+				function(e){
+					e.preventDefault()
+					location.reload()
+				})
+			clearInterval(wall)
+			
 		}
-	},50)
+	},300)
 }
+
+
+
+
+
+
 
 function spawn() {
 	let mobVariant = mobVariants[Math.floor(Math.random() * 3)]
@@ -154,7 +175,7 @@ function spawn() {
 			posX -= speedReference * mobVariant.speed
 			mobSpawned[mobPlace].position = mob.getBoundingClientRect()
 			if (posX == 0){
-					wallAttack = setInterval(function(){
+				wallAttack = setInterval(function(){
 					wall -= mobVariety.damages
 					wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
 					mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
@@ -222,15 +243,15 @@ function upgrade(sellerType){
 }
 
 function createButton(){
-				let button =document.createElement('button')
-				button.setAttribute('id','nextLevel')
-				button.innerHTML = 'Passez au niveau : ' + (level + 1)
-				document.querySelector('.game').appendChild(button)
-				document.querySelector('#nextLevel').addEventListener(
-					'click',
-					function(){
-						mobSpawned = []
-						mobs = []
+	let button =document.createElement('button')
+	button.setAttribute('id','nextLevel')
+	button.innerHTML = 'Passez au niveau : ' + (level + 1)
+	document.querySelector('.game').appendChild(button)
+	document.querySelector('#nextLevel').addEventListener(
+		'click',
+		function(){
+			mobSpawned = []
+			mobs = []
 						//amountMob = 0
 						mobKilled = 0
 						level+=1
@@ -241,7 +262,7 @@ function createButton(){
 						object.removeChild(button)
 
 					})
-				}
+}
 
 
 function defenseDamagesRange1(life){
@@ -302,15 +323,15 @@ function destroyShoot(thisShoot){
 }
 
 function isCollide(a, b) {
-    var aRect = a.getBoundingClientRect();
-    var bRect = b.getBoundingClientRect();
+	var aRect = a.getBoundingClientRect();
+	var bRect = b.getBoundingClientRect();
 
-    return (
-        ((aRect.top + aRect.height) < (bRect.top)) ||
-        (aRect.top > (bRect.top + bRect.height)) ||
-        ((aRect.left + aRect.width) < bRect.left) ||
-        (aRect.left > (bRect.left + bRect.width))
-    )
+	return (
+		((aRect.top + aRect.height) < (bRect.top)) ||
+		(aRect.top > (bRect.top + bRect.height)) ||
+		((aRect.left + aRect.width) < bRect.left) ||
+		(aRect.left > (bRect.left + bRect.width))
+		)
 }
 
 
@@ -340,7 +361,7 @@ document.querySelector('.seller1 .upgrade button').addEventListener(
 			document.querySelector('.money p').innerHTML = money
 		}
 	}
-)
+	)
 
 document.querySelector('.seller2 .buy button').addEventListener(
 	'click',
@@ -368,7 +389,7 @@ document.querySelector('.seller2 .upgrade button').addEventListener(
 			document.querySelector('.money p').innerHTML = money
 		}
 	}
-)
+	)
 
 
 heros.style.marginTop = margin + 'px'

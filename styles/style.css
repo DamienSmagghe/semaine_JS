@@ -12,6 +12,7 @@ body {
 	background-size: cover;
 }
 .game {
+	position: relative;
 	width: 960px;
 	height: 100%;
 	margin: 0 auto;
@@ -137,6 +138,28 @@ body {
 	font-family:'SouthPark';
 }
 
+.retry {
+	padding: 30px;
+	background: #e74c3c ;
+	color: white;
+	position: absolute;
+	font-size: 25px;
+	font-family: 'SouthPark';
+	text-transform: uppercase;
+	left: 40%;
+	top: 20%;
+	text-align: center;
+}
+
+.dispbest {
+	padding: 20px;
+	position: absolute;
+	left: 37%;
+	top: 40%;
+	text-align: center;
+	background: #2980b9;
+	font-family: 'SouthPark';
+}
 /*Animations classList*/
 .mob1{
 	animation-name: animationMob1;
