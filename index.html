@@ -1,70 +1,53 @@
 <!DOCTYPE html>
 <html lang="fr">
-	<head>
-		<meta charset="utf-8">
-		<title>Titre de ma page</title>
-		<meta name="description" content="Description de ma page">
-		<link rel="stylesheet" href="styles/style.css">
-	</head>
-	<body>
-		<audio src="chemin vers musique"></audio>
-		<div class="main">
-			<div class="game">
-				<div class="playZone">
-					<div class="safeZone"></div>
-					<div class="defense">
-						<div class="heros"></div>
-						<div class="wall">
-							<div class="spot"></div>
-							<div class="spot"></div>
-							<div class="spot"></div>
-							<div class="spot"></div>
-						</div>
-					</div>
-					<div class="street">
-						<div class="range range1"></div>
-						<div class="range range2"></div>
-						<div class="range range3"></div>
-					</div>
-				</div>
-				<div class="menu">
-					<div class="money">
-						<img src="../images/money.png" alt="Logo monnaie">
-						<p></p>
-					</div>
-					<div class="wallLife">
-						<p>Vie du mur : </p>
-					</div>
-					<div class="level">
-						<p>Niveau : 1</p>
-					</div>
-					<div class="seller1">
-						<div class="buy">
-							<button class="button">Achetez un vendeur lanceur de smartphone</button>
-							<p>Précis, ce vendeur attaquera de loin mais il infligera des dégâts moindres aux clients enragés.</p>
-						</div>
-						<div class="upgrade">
-							<button class="buttonUpgrade">Amelioration</button>
-							<div class="price"></div>
-							<p class="level"></p>
-						</div>
-					</div>
-					<div class="seller2">
-						<div class="buy">
-							<button class="button">Achetez un vendeur lanceur de mac</button>
-							<p>Robuste, ce vendeur attaquera uniquement de près mais il infligera de gros dégâts aux clients enragés.</p>
-						</div>
-						<div class="upgrade">
-							<button class="buttonUpgrade">Amelioration</button>
-							<div class="price"></div>
-							<p class="level"></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+<head>
+  <meta charset= "utf-8">
+  <meta name="description" content="PAPEL PANIC jeu de tower defense en ligne">
+  <title>PAPEL PANIC - Jeu Flash</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style_home_page.css">
+</head>
+<body>
 
-	</body>
-	<script src="scripts/functions.js"></script>
-	<script src="scripts/app.js"></script>
+  <header>
+    <h1 class="title"> PAPEL<br><span class="downTitle">PANIC</span></h1>
+  </header>
+
+  <article>
+    <div>
+      <h3 id="rules"> LES RÈGLES </h3>
+    </div>
+    <div>
+      <p class="intro">Papel n'a jamais autant été menacé: entre les touristes asiatiques assoiffés de technologies, les papels addicts recherchant l'innovation et les fans de samsoul voulant détruire l'entreprise. Tu incarneras Steeve le patron de l'entreprise et tu devras protéger le magasin.</p>
+      <div class="letr">
+        <div class="ouai">
+          <p>Tirer des smartphones:</p>
+          <img src="images/lettre_M1.png"/>
+        </div>
+        <div>
+          <p>Aller en haut:</p>
+          <img src="images/lettre_Z1.png"/>
+        </div>
+        <div >
+         <p>Allez en bas :</p>
+         <img src="images/letters_S1.png"/>
+       </div>
+     </div>
+     <div class="prout">
+      <p>Il est possible d'acheter jusqu’à 4 vendeurs avec le Maluda (argent du jeu).
+       On le reçoit en tuant les clients.
+
+       Il y a deux types de vendeurs : un lançant des smartphones à meilleur porté mais causant moins de dégâts. L’autre à moins de porté et mais cause plus de dégâts.
+
+       Il y a 3 types de mobs de bases et un mob boss pouvant apparaître tous les 5 vagues. Il est possible d’améliorer les vendeurs contre de l'argent.<br>
+       <span>  OBJECTIF : tenir le plus longtemps ! </span>
+     </p>
+   </div>
+
+ </article>
+ <footer>
+  <a href="game.html" class="bouton">Fight</a>
+</footer>
+<script src="script/app.js"></script>
+</body>
 </html>

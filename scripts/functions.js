@@ -14,25 +14,25 @@ mob1 = {
 	speed : 3,
 	damages : 30,
 	health : 30,
-	reward : 30
+	reward : 15
 },
 mob2 = {
 	speed : 1.8,
 	damages : 80,
 	health : 100,
-	reward : 60
+	reward : 25
 },
 mob3 = {
 	speed : 2.5,
 	damages : 100,
 	health : 120,
-	reward : 100
+	reward : 40
 },
 boss = {
 	speed : 0.8,
 	damages : 200,
 	health : 300,
-	reward : 300,
+	reward : 200,
 }
 ]
 
@@ -124,11 +124,6 @@ function defeat(){
 		}
 	},300)
 }
-
-
-
-
-
 
 
 function spawn() {
@@ -229,12 +224,10 @@ function stopSpawn(){
 	}, 2000)
 }
 
-
 function mobKilling(thisMob){
 	let obj = document.querySelector('.street')
 	obj.removeChild(thisMob)
 }
-
 
 function upgrade(sellerType){
 	sellerType.damages *= 2
