@@ -68,7 +68,7 @@ let spots = document.querySelectorAll('.spot') // 4 spaces in order to put the t
 let freeSpots = 4 //Free spots for tower
 
 let levelSeller1 = document.querySelector('.seller1 .level').innerHTML = seller1.level //div containing level of the the seller type 1 (smartphone launcheur)
-let levelSeller2 = document.querySelector('.seller2 .level').innerHTML = seller2.level //div containing level of the the seller type 2 (computer launcheur) 
+let levelSeller2 = document.querySelector('.seller2 .level').innerHTML = seller2.level //div containing level of the the seller type 2 (computer launcheur)
 // div containing price to upgrade
 let priceSeller2 = document.querySelector('.seller2 .upgrade .price').innerHTML = seller2.price
 let priceSeller1 = document.querySelector('.seller1 .upgrade .price').innerHTML = seller1.price
@@ -78,10 +78,10 @@ let money = 0 //money of the player (at 0 in the beginnning)
 let level = 1 // the wave
 let wall = 1000 // vie du mur
 let wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall // displaying the wall life in the menu
-let bestScore = 0 
+let bestScore = 0
 
 //Defining the 4 horizontal axis where the mob can pop on the game surface
-let variousSpawn = ['20px', '120px','220px','320px'] 
+let variousSpawn = ['20px', '120px','220px','320px']
 
 //The spawn interval when the game start
 let timeInterval = 5000
@@ -126,7 +126,7 @@ function defeat(){
 	let death = setInterval(function(){
 		if (wall <= 0){ //checking if wall life is superior to 0
 			if (bestScore < level){ //checking if the last level of the current party is better than the best score and if it is refreshing the best score
-				bestScore = level 
+				bestScore = level
 			}
 			let retry = document.createElement('button') //creating the button to restart the game
 			retry.classList.add('retry') //giving this button a class to put styles in css
@@ -145,7 +145,7 @@ function defeat(){
 					location.reload()
 				})
 			clearInterval(wall)
-			
+
 		}
 	},300)
 }
@@ -166,9 +166,9 @@ function spawn() {
 
 		}
 	}
-	
-	mobSpawned.push({position : 0, life : mobVariant.health})//putting the life, the position of the mob in an object in an array declared in the variables 
-	
+
+	mobSpawned.push({position : 0, life : mobVariant.health})//putting the life, the position of the mob in an object in an array declared in the variables
+
 	let mobPlace = amountMob // the place of the mob in the wave
 	let posX = document.querySelector('.street').offsetWidth // decalring position of the mob when spawning
 	let towerDamage
@@ -263,7 +263,7 @@ function stopSpawn(){
 				amountMob = 0
 				clearInterval(ending)
 				createButton()//run this function if the wave his finished
-			}	
+			}
 		}
 	}, 2000)
 }
@@ -354,7 +354,7 @@ function generateShoot(){
 function destroyShoot(thisShoot){
 	let obj = document.querySelector('.defense')
 	obj.removeChild(thisShoot)
-	amountShoot -- 
+	amountShoot --
 }
 
 //checking collision between an a element and a b element

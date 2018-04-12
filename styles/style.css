@@ -6,22 +6,19 @@
 body {
 	margin: 0 auto;
 	padding: 0;
+	background-image: url('../images/BackgroundMain2.png');
 }
-.main{
-	background-image: url('../images/BackgroundMain.png');
-	background-size: cover;
-}
+
 .game {
 	position: relative;
 	width: 960px;
-	height: 100%;
 	margin: 0 auto;
 	display: flex;
 	flex-wrap: wrap;
 	overflow: hidden;
 }
 .safeZone {
-	width: 100px;
+	width: 96px;
 	height: 400px;
 }
 .defense {
@@ -33,6 +30,7 @@ body {
 	display: flex;
 	background-image: url("../images/Plan de travail 1.png");
 	margin-top: 50px;
+	border: 2px black solid;
 }
 .street {
 	width: 660px;
@@ -43,7 +41,6 @@ body {
 .range {
 	width: 220px;
 	height: 400px;
-	border-left: 1px solid black;
 }
 #mob {
 	width: 60px;
@@ -57,26 +54,26 @@ body {
 	width: 100%;
 	border-radius: 2px;
 }
-.menu {
-	display: flex;
-	text-align: center;
-}
 .seller1, .seller2 {
 	margin: 10px;
+	background-color: white;
+	opacity: 0.9;
+	width: 300px;
+	padding:10px
 }
-#nextLevel {
-	position: fixed;
-	top: 28%;
-	left: 45%;
-	border:none;
-	padding:6px 6px 6px 6px;
-	border-radius:4px;
-	box-shadow:1px 1px 3px #aaa;
-	background:#f38b1b;
-	font:bold 13px Arial;
-	color:black;
-	font-family:'SouthPark';
+.menuInfo{
+	width:300px;
+	background-color: white;
+	padding: 10px;
+	margin: 10px;
 }
+.money > p {
+	width: 30px;
+	height:30px;
+	padding-top: 6px;
+	margin-left:40px;
+}
+
 .defense {
 	display: flex;
 }
@@ -100,7 +97,6 @@ body {
 
 
 #heros{
-	margin-top: 20px;
 	width:60px;
 	height:60px;
 	margin-left:30px;
@@ -114,6 +110,46 @@ body {
 	left:90px;
 }
 
+/*	Menu for sellers, information and upgrades*/
+.menu {
+	display: flex;
+	justify-content: center;
+	width:960px;
+	height:100%;
+}
+
+#nextLevel {
+	position: fixed;
+	top: 28%;
+	left: 45%;
+	border:none;
+	padding:6px 6px 6px 6px;
+	border-radius:4px;
+	box-shadow:1px 1px 3px #aaa;
+	background:#f38b1b;
+	font:bold 13px Arial;
+	color:black;
+	font-family:'SouthPark';
+	outline: none;
+}
+.money{
+	width:30px;
+	height:30px;
+	background-image: url('../images/money.png');
+	background-size: cover;
+	margin-left: 100px;
+	margin-top: 60px;
+}
+
+.price{
+	font-family: 'SouthPark';
+	text-align: center;
+	margin-top: 15px;
+}
+p{
+	font-family: 'Montserrat', sans-serif;
+	text-align: center;
+}
 
 /*disign button buy*/
 .button{
@@ -125,6 +161,11 @@ body {
 	font:bold 13px Arial;
 	color:black;
 	font-family:'SouthPark';
+	outline: none;
+}
+
+.upgrade{
+	text-align: center;
 }
 
 /*Disign button upgrade*/
@@ -137,7 +178,17 @@ body {
 	font:bold 13px Arial;
 	color:black;
 	font-family:'SouthPark';
+	outline: none;
 }
+
+/*Button hovers*/
+.button:hover{
+	cursor: pointer;
+}
+.buttonUpgrade:hover{
+	cursor: pointer;
+}
+
 
 .retry {
 	padding: 30px;
@@ -182,13 +233,13 @@ body {
 }
 
 .boss{
-	background-image: url('../imagesC/lientSamsoul.pngg');
-	background-size: contain;
-	background-repeat: no-repeat;
+	animation-name: animationBoss;
+	animation-duration: 1.2s;
+	animation-iteration-count: infinite;
 }
 .animationHeros{
 	animation-name: animationHeros;
-	animation-duration: 0.9s;
+	animation-duration: 1.2s;
 	animation-iteration-count: infinite;
 }
 
