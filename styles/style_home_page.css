@@ -65,6 +65,7 @@ article{
 
 .letr{
   display: flex;
+  justify-content: center;
 }
 .letr div{
   width: 30%;
@@ -72,7 +73,7 @@ article{
 p span{
   color: #B60000;
 }
-.prout{
+.regles{
   display: flex;
   justify-content: center;
 }
