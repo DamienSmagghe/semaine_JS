@@ -17,6 +17,16 @@ body {
 	flex-wrap: wrap;
 	overflow: hidden;
 }
+
+/* -------- PLAYZONE DEFENCE--------- */
+
+.playZone {
+	display: flex;
+	background-image: url("../images/Plan de travail 1.png");
+	margin-top: 50px;
+	border: 2px black solid;
+}
+
 .safeZone {
 	width: 96px;
 	height: 400px;
@@ -25,13 +35,53 @@ body {
 	width: 200px;
 	height: 400px;
 	position:relative;
-}
-.playZone {
 	display: flex;
-	background-image: url("../images/Plan de travail 1.png");
-	margin-top: 50px;
-	border: 2px black solid;
 }
+
+.seller1, .seller2 {
+	margin: 10px;
+	background-color: white;
+	opacity: 0.9;
+	width: 300px;
+	padding:10px
+}
+
+.wall, .heros {
+	width: 100px;
+	height: 400px;
+}
+.spot {
+	width: 60px;
+	height: 60px;
+	margin: 20px 10px 40px 10px;
+}
+
+/* id for js function */
+#tower {
+	width: 60px;
+	height: 60px;
+}
+#tower2 {
+	width: 60px;
+	height: 60px;
+}
+
+#heros{
+	width:60px;
+	height:60px;
+	margin-left:30px;
+	position:absolute;
+}
+
+#shoot{
+	width:20px;
+	height:20px;
+	position:absolute;
+	left:90px;
+}
+
+/* ----------PLAYZONE ATTACK------- */
+
 .street {
 	width: 660px;
 	height: 400px;
@@ -54,13 +104,9 @@ body {
 	width: 100%;
 	border-radius: 2px;
 }
-.seller1, .seller2 {
-	margin: 10px;
-	background-color: white;
-	opacity: 0.9;
-	width: 300px;
-	padding:10px
-}
+
+
+/* ---------MENU INFORMATIONS--------- */
 .menuInfo{
 	width:300px;
 	background-color: white;
@@ -74,42 +120,6 @@ body {
 	margin-left:40px;
 }
 
-.defense {
-	display: flex;
-}
-.wall, .heros {
-	width: 100px;
-	height: 400px;
-}
-.spot {
-	width: 60px;
-	height: 60px;
-	margin: 20px 10px 40px 10px;
-}
-#tower {
-	width: 60px;
-	height: 60px;
-}
-#tower2 {
-	width: 60px;
-	height: 60px;
-}
-
-
-#heros{
-	width:60px;
-	height:60px;
-	margin-left:30px;
-	position:absolute;
-}
-
-#shoot{
-	width:20px;
-	height:20px;
-	position:absolute;
-	left:90px;
-}
-
 /*	Menu for sellers, information and upgrades*/
 .menu {
 	display: flex;
@@ -118,20 +128,6 @@ body {
 	height:100%;
 }
 
-#nextLevel {
-	position: fixed;
-	top: 28%;
-	left: 45%;
-	border:none;
-	padding:6px 6px 6px 6px;
-	border-radius:4px;
-	box-shadow:1px 1px 3px #aaa;
-	background:#f38b1b;
-	font:bold 13px Arial;
-	color:black;
-	font-family:'SouthPark';
-	outline: none;
-}
 .money{
 	width:30px;
 	height:30px;
@@ -151,6 +147,7 @@ p{
 	text-align: center;
 }
 
+/* ----------BUTTONS----- */
 /*disign button buy*/
 .button{
 	border:none;
@@ -189,7 +186,7 @@ p{
 	cursor: pointer;
 }
 
-
+/* ------------RETRY GAME------- */
 .retry {
 	padding: 30px;
 	background: #e74c3c ;
@@ -203,6 +200,21 @@ p{
 	text-align: center;
 }
 
+#nextLevel {
+	position: fixed;
+	top: 28%;
+	left: 45%;
+	border:none;
+	padding:6px 6px 6px 6px;
+	border-radius:4px;
+	box-shadow:1px 1px 3px #aaa;
+	background:#f38b1b;
+	font:bold 13px Arial;
+	color:black;
+	font-family:'SouthPark';
+	outline: none;
+}
+
 .dispbest {
 	padding: 20px;
 	position: absolute;
@@ -212,26 +224,32 @@ p{
 	background: #2980b9;
 	font-family: 'SouthPark';
 }
+
+/* ----------ANIMATIONS------- */
+
 /*Animations classList*/
+/* asian client class */
 .mob1{
 	animation-name: animationMob1;
 	animation-duration: 0.7s;
 	animation-iteration-count: infinite;
 }
 
+/* women client class */
 .mob2{
 	animation-name: animationMob2;
 	animation-duration: 0.5s;
 	animation-iteration-count: infinite;
 }
 
-
+/* samsoul client class */
 .mob3{
 	animation-name: animationMob3;
 	animation-duration: 0.5s;
 	animation-iteration-count: infinite;
 }
 
+/* boss class */
 .boss{
 	animation-name: animationBoss;
 	animation-duration: 1.2s;
@@ -266,6 +284,7 @@ p{
 
 /*animation: keyframes*/
 
+/* keyframes for hero playable */
 @keyframes animationHeros{
 	0% {background: url('../images/SteveJobs1.png');background-size: contain;	background-repeat: no-repeat;}
 	17% {background: url('../images/SteveJobs2.png');background-size: contain;	background-repeat: no-repeat;}
@@ -276,7 +295,7 @@ p{
 	100% {background: url('../images/SteveJobs1.png');background-size: contain;	background-repeat: no-repeat;}
 }
 
-
+/* keyframe for tower1 */
 @keyframes animationSeller1{
 	0% {background: url('../images/VendeurTower1.png');background-size: contain;	background-repeat: no-repeat;}
 	17% {background: url('../images/VendeurTower2.png');background-size: contain;	background-repeat: no-repeat;}
@@ -287,6 +306,7 @@ p{
 	100% {background: url('../images/VendeurTower1.png');background-size: contain;	background-repeat: no-repeat;}
 }
 
+/* keyframes for tower2 */
 @keyframes animationSeller2{
 	0% {background: url('../images/Vendeur1.png');background-size: contain;	background-repeat: no-repeat;}
 	17% {background: url('../images/Vendeur2.png');background-size: contain;	background-repeat: no-repeat;}
@@ -298,7 +318,7 @@ p{
 
 }
 
-
+/* keyframe for playable character shot  */
 @keyframes animationShoot{
 	0% {background: url('../images/Iphone 1.png');background-size: contain;	background-repeat: no-repeat;}
 	7% {background: url('../images/Iphone 2.png');background-size: contain;	background-repeat: no-repeat;}
@@ -317,6 +337,7 @@ p{
 	100% {background: url('../images/Iphone 17.png');background-size: contain;	background-repeat: no-repeat;}
 }
 
+/* keyframes for asian client (enemie) */
 @keyframes animationMob1{
 	0% {background: url('../images/ClientAsiatique1.png');background-size: contain;	background-repeat: no-repeat;}
 	10% {background: url('../images/ClientAsiatique2.png');background-size: contain;	background-repeat: no-repeat;}
@@ -331,14 +352,14 @@ p{
 	100% {background: url('../images/ClientAsiatique1.png');background-size: contain;	background-repeat: no-repeat;}
 }
 
-
+/* keyframes for women client (enemie) */
 @keyframes animationMob2{
 	0% {background: url('../images/Cliente2.png');background-size: contain;	background-repeat: no-repeat;}
 	50% {background: url('../images/Cliente3.png');background-size: contain;	background-repeat: no-repeat;}
 	100% {background: url('../images/Cliente2.png');background-size: contain;	background-repeat: no-repeat;}
 }
 
-
+/* keyframes for samsoul client (enemie) */
 @keyframes animationMob3{
 	0% {background: url('../images/ClientSamsoul1.png');background-size: contain;	background-repeat: no-repeat;}
 	33% {background: url('../images/ClientSamsoul2.png');background-size: contain;	background-repeat: no-repeat;}
@@ -346,7 +367,7 @@ p{
 	100% {background: url('../images/ClientSamsoul1.png');background-size: contain;	background-repeat: no-repeat;}
 }
 
-
+/* keyframes for aniamtion boss vague 5 or more */
 @keyframes animationBoss{
 	0% {background: url('../images/BossDéplacement 1.png');background-size: contain;	background-repeat: no-repeat;}
 	8% {background: url('../images/BossDéplacement 1.1.png');background-size: contain;	background-repeat: no-repeat;}
