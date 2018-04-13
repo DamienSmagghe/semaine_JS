@@ -104,7 +104,6 @@ generateHeros()
 let amountMob = 0
 let intervalSpawn = setInterval(spawn, 3000)
 stopSpawn()
-defeat()
 
 
 
@@ -122,9 +121,8 @@ defeat()
 
 
 //This function will check each 3 second if the the loser has not loose, which means that is wall still has life and act if the player loose
-function defeat(){
-	let death = setInterval(function(){
-		if (wall <= 0){ //checking if wall life is superior to 0
+function defeat(inter){
+		 //checking if wall life is superior to 0
 			if (bestScore < level){ //checking if the last level of the current party is better than the best score and if it is refreshing the best score
 				bestScore = level
 			}
@@ -136,7 +134,7 @@ function defeat(){
 			bestScoreDisp.classList.add('dispbest')
 			bestScoreDisp.innerHTML = 'Votre meilleur score : ' + bestScore
 			document.querySelector('.game').appendChild(bestScoreDisp)
-			clearInterval(death) //stopping the interval in order to avoid to create buttons aigain and again
+			clearInterval(inter)
 
 			retry.addEventListener( //this event permits to reload the page to restart the game
 				'click',
@@ -146,9 +144,8 @@ function defeat(){
 				})
 			clearInterval(wall)
 
+
 		}
-	},300)
-}
 
 //This function permits to create the mob, giving him the variety and his life in consequence
 //The function permits to spawn a mob random type of mob with a random location to spawn
@@ -157,14 +154,6 @@ function spawn() {
 	//giving the possibility to bosses to spawn every 5 waves
 	if((level % 5) == 0){
 		mobVariant = mobVariants[Math.floor(Math.random() * 4)]
-	}
-	if((level % 10) == 0){ // every 10 waves the mobs get more hard to kill and dangerous
-		for(let j = 0; j < mobVariants.length; j++){
-			mobVariants[j].health *= 2
-			mobVariants[j].damages *= 2
-			mobVariants[j].speed += 0.2
-
-		}
 	}
 
 	mobSpawned.push({position : 0, life : mobVariant.health})//putting the life, the position of the mob in an object in an array declared in the variables
@@ -209,11 +198,14 @@ function spawn() {
 				//run the damages on the variable wall which represent the life of the wall if the mob is stick to the wall
 				wallAttack = setInterval(function(){
 					wall -= mobVariety.damages //applying damages to the wall
-					wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall // updating the life in the page
+					wallLife = document.querySelector('.wallLife p').innerHTML = "Vie du mur : " + wall
+					if (wall <= 0){
+						defeat(wallAttack)
+					} // updating the life in the page
 					mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'
 				}, 1000)
 			}
-			else if (posX >= 0){
+			if (posX >= 0){
 				mob.style.left = posX + 'px'// moving to the left until the mob reach the wall
 				mobLife.style.width = mobSpawned[mobPlace].life / mobVariant.health * 100 +'%'// filling the div which represent life remaining
 			}
@@ -238,7 +230,7 @@ function spawn() {
 				}
 			}
 			//if the mob is in the short range he takes hits by the seller 1 and seller 2 towers every second
-			else if (posX <= range1 && posX >= 0){
+			else if (posX <= range1 ){
 				if((tower1 > 0 || tower2 > 0)){
 					mobSpawned[mobPlace].life -= seller1.damages * tower1 + seller2.damages * tower2
 				}
@@ -293,13 +285,20 @@ function createButton(){
 		function(){
 			mobSpawned = []
 			mobs = []
-						mobKilled = 0
-						level+=1
-						let displayLevel = document.querySelector('.level p').innerHTML = 'Niveau : ' + level //upadating the level on the page
-						intervalSpawn = setInterval(spawn, timeInterval)
-						ending = setInterval(stopSpawn, 2000) //run the spawning function
-						let object = document.querySelector('.game')
-						object.removeChild(button)// delete the button after clicking
+			mobKilled = 0
+			level+=1
+			if((level % 10) == 0){ // every 10 waves the mobs get more hard to kill and dangerous
+				for(let j = 0; j < mobVariants.length; j++){
+					mobVariants[j].health *= 2
+					mobVariants[j].damages *= 2
+					mobVariants[j].speed += 0.2
+				}
+			}
+			let displayLevel = document.querySelector('.level p').innerHTML = 'Niveau : ' + level //upadating the level on the page
+			intervalSpawn = setInterval(spawn, timeInterval)
+			ending = setInterval(stopSpawn, 2000) //run the spawning function
+			let object = document.querySelector('.game')
+			object.removeChild(button)// delete the button after clicking
 
 					})
 }
